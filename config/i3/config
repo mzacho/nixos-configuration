@@ -1,0 +1,3 @@
+include /etc/nixos/config/i3/common.cfg
+include /etc/nixos/config/i3/bindings.cfg
+include /etc/nixos/config/i3/solarized-dark.cfg

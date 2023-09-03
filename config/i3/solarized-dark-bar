@@ -1,0 +1,27 @@
+hide_edge_borders none
+smart_borders no_gaps
+
+client.focused #333333 #333333 #eee8d5 #2e9ef4 #285577
+
+bar {
+    font pango: Terminus Nerd Font 10
+    status_command i3status
+    output primary
+    output DP-1
+    i3bar_command i3bar
+    position bottom
+    mode hide
+
+     colors {
+          background #002b36
+          statusline #839496
+
+    #     separator  #44475A
+
+    #     focused_workspace  #44475A #44475A #F8F8F2
+    #     active_workspace   #282A36 #44475A #F8F8F2
+          inactive_workspace #002b36 #002b36 #BFBFBF
+    #     urgent_workspace   #FF5555 #FF5555 #F8F8F2
+    #     binding_mode       #FF5555 #FF5555 #F8F8F2
+     }
+}

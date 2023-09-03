@@ -1,0 +1,46 @@
+!! =========== xresources urxvt
+
+URxvt.termName: rxvt-unicode
+    
+URxvt.borderLess: false
+URxvt.externalBorder: 0
+URxvt.internalBorder: 6
+
+URxvt.letterSpace: -1
+
+URxvt.perl-ext-common: default,matcher,font-size
+URxvt.url-launcher: xdg-open
+URxvt.matcher.button: 1
+
+URxvt.cursorBlink: true
+URxvt.visualBell: false
+
+URxvt.iso14755: false
+URxvt.saveLines: 16384
+URxvt.scrollBar: false
+URxvt.scrollTtyKeypress: true
+URxvt.scrollTtyOutput: false
+URxvt.scrollWithBuffer: true
+URxvt.scrollstyle: plain
+URxvt.shading: 100
+URxvt.transparent: false
+   
+!! jump between words
+URxvt.keysym.Control-Up:     \033[1;5A
+URxvt.keysym.Control-Down:   \033[1;5B
+URxvt.keysym.Control-Left:   \033[1;5D
+URxvt.keysym.Control-Right:  \033[1;5C
+
+!! single-line scroll
+URxvt.keysym.Shift-Up: command:\033]720;1\007
+URxvt.keysym.Shift-Down: command:\033]721;1\007
+
+!! single-line scroll - emacs bindings
+URxvt.keysym.Meta-p: command:\033]720;1\007
+URxvt.keysym.Meta-n: command:\033]721;1\007
+
+!! page scroll - emacs bindings
+URxvt.keysym.Control-v: eval:scroll_down_pages 1
+URxvt.keysym.Meta-v: eval:scroll_up_pages 1
+
+URxvt.keysym.Control-s: searchable-scrollback:start

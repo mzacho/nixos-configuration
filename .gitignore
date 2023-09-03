@@ -1,0 +1,4 @@
+*~
+*.elc
+bootstrap/scripts/result
+config/secret

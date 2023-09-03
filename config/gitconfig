@@ -1,0 +1,83 @@
+[user]
+	email = "hi@martinzacho.net"
+	name = "Martin Zacho"
+	signingKey = "/home/martin/.ssh/id_ed25519_sk.pub"
+
+[commit]
+	gpgSign = false
+
+[gpg]
+    format = ssh
+
+[sendemail]
+    smtpServer = 127.0.0.1
+    smtpServerPort = 1025
+    smtpUser = hi@martinzacho.net
+    smtpPass = @smtppass@
+
+[url "git@github.com:"]
+	insteadOf = "gh:"
+
+[fetch]
+    prune = true
+    pruneTags = true
+    tagopt = "--no-tags"
+    
+[alias]    
+	aliases = "config --get-regexp alias"
+    b = "branch"
+    a = "add"
+    c = "commit"
+    cleanup = "!git branch --merged master | grep  -v '\\*\\|master\\|develop' | xargs -n 1 -r git branch -d"
+    co = "checkout"
+    cl = "clone"
+	l = "log --pretty=oneline -n 20 --graph --abbrev-commit"
+	p = "pull --recurse-submodules"
+	s = "status"
+    sw = "switch"
+    r = "remote"
+	whoami = "config user.email"    
+
+[branch]
+	sort = "-committerdate"
+
+[color "status"]
+	added = "green"
+	changed = "yellow"
+	untracked = "red"
+
+[core]
+	pager = delta
+	precomposeunicode = false
+	trustctime = false
+	untrackedCache = true
+	whitespace = "space-before-tab,-indent-with-non-tab,trailing-space"
+
+[delta]    
+    navigate = true
+
+[help]
+	autocorrect = 1
+
+[http]
+	cookiefile = "$HOME/.gitcookie"
+
+[init]
+	defaultBranch = "main"
+
+[interactive]
+	diffFilter = "delta --color-only"
+
+[merge]
+	log = true
+    conflictstyle = zdiff3
+
+[pull]
+	rebase = true
+
+[push]
+	default = "current"
+	followTags = true
+
+[tag]
+	gpgSign = true

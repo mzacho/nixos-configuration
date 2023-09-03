@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec $(brew --prefix)/bin/ccls "$@" '--init={"cache":{"directory":"/tmp/ccls-cache"}}'
+# (setq ccls-args '("--log-file=/tmp/ccls_log.txt"

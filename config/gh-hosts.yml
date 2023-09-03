@@ -1,0 +1,5 @@
+github.com:
+    user: mzacho
+    git_protocol: ssh
+    users:
+        mzacho:

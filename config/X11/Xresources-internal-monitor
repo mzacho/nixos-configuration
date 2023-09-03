@@ -1,0 +1,5 @@
+!! ======= xresources monitor internal
+
+Xft.dpi: 96
+URxvt.font: xft:FiraCode Nerd Font Mono:style=Regular:size=17:antialias=true
+URxvt.boldFont: xft:FiraCode Nerd Font Mono:style=Bold:size=17:antialias=true

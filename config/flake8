@@ -1,0 +1,16 @@
+[flake8]
+ignore =
+    # Missing docstring in public module
+    D100,
+    # Missing docstring in public function
+    D103,
+    # Expected 2 blank lines, found 1
+    E302,
+    # Expected 2 blank lines after class or function definition, found 1
+    E305,
+    # Missing whitespace after ','
+    E231,
+    # no newline at end of file (lsp)
+    W292,
+    # Errors also reported by mypls:
+    F821

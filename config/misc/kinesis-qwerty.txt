@@ -1,0 +1,12 @@
+* [tab]>[escape]
+* [caps]>[tab]
+* thumb clusters
+* [']>[KPSHIFT]
+* [kp-']>[KPSHIFT]
+[home]>[rshift]
+[end]>[rwin]
+[`]>[rshift]
+[lctrl]>[bspace]
+[delete]>[lalt]
+[bspace]>[lctrl]
+[rwin]>[ralt]

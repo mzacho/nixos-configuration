@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+db=~/.config/github/local.db
+t=clones
+
+select_submodule_query () {
+    echo "select * from $t where local_directory = \"$1\" and is_submodule = 1;"
+}
+
+select_fork_query () {
+    echo "select * from $t where local_directory = \"$1\" and is_fork = 1;"
+}
+
+select_one_where_query () {
+    echo "select * from $t where local_directory = \"$1\";"
+}
+
+select_all_query () {
+    echo "select * from $t;"
+}
+
+select_all_submodules_query () {
+    echo "select * from $t where is_submodule = 1;"
+}
+
+delete_where_path_query () {
+    echo "delete from $t where local_directory = \"$1\";"
+}
+
+insert_into_clones_query () {
+    echo "insert into $t values (\"$1\",\"$2\",\"$3\",$4,$5);"
+}
+
+select_submodule () {
+    select_submodule_query $1 | sqlite3 -line $db
+}
+
+select_fork () {
+    select_fork_query $1 | sqlite3 -line $db
+}
+
+select_one_where () {
+    select_one_where_query $1 | sqlite3 -line $db
+}
+
+select_all () {
+    select_all_query | sqlite3 -line $db
+}
+
+select_all_submodules () {
+    select_all_submodules_query | sqlite3 -line $db
+}
+
+delete_where_path () {
+    delete_where_path_query $1 | sqlite3 -line $db
+}
+
+insert_into_clones () {
+    local_directory=$1
+    origin=$2
+    upstream=$3
+    is_fork=$4
+    is_submodule=$5
+    
+    insert_into_clones_query $local_directory $origin $upstream \
+      $is_fork $is_submodule | sqlite3 -line $db
+}

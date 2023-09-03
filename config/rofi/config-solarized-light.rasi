@@ -1,0 +1,11 @@
+configuration {
+  modes: [ combi ];
+  combi-modes: [ window, drun, run ];
+}
+
+@theme "Paper"
+
+element-text {
+ background-color: inherit;
+ text-color: inherit;
+}

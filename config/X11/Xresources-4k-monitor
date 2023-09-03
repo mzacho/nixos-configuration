@@ -1,0 +1,5 @@
+!! ===== xresources monitor 4k 3840x2160 2x scale
+
+Xft.dpi: 192
+URxvt.font: xft:FiraCode Nerd Font Mono:style=Regular:size=12:antialias=true
+URxvt.boldFont: xft:FiraCode Nerd Font Mono:style=Bold:size=12:antialias=true
