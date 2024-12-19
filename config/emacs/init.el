@@ -2,7 +2,7 @@
 ;; Created: Jan 22 2022
 
 (setq custom-file "~/.emacs.d/custom.el")
-(if (f-exists? custom-file)
+(if (file-exists-p custom-file)
     (load custom-file))
 
 ;; Load core config
