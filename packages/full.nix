@@ -108,6 +108,7 @@ with pkgs;
   sccache
   shellcheck
   silver-searcher
+  simplescreenrecorder
   slack
   solaar
   speedtest-cli
