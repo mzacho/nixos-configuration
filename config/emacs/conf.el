@@ -653,7 +653,7 @@ then converted to PDF at the same location."
        `(markdown-header-face ((,class (:foreground "#839496" :underline t))))
        `(header-line
          ((,class (:inverse-video unspecified
-                                  :height 170
+                                  :height ,(if monitor-scaled-p 120 170)
                                   :overline nil
                                   :underline ,s-header-line-underline
                                   :foreground ,s-header-line-fg
@@ -878,14 +878,15 @@ then converted to PDF at the same location."
   (vertico-scroll-margin 0)
   (vertico-count 8)
   (vertico-resize t)
-  (vertico-cycle t)
+  (vertico-cycle nil)
   (vertico-multiform-commands
    '((execute-extended-command unobtrusive) ; M-x
      (consult-imenu buffer indexed)
      (consult-buffer buffer indexed)
      (consult-git-grep buffer indexed)
      (consult-grep buffer indexed)
-     (consult-xref buffer indexed)))
+     (consult-xref buffer indexed)
+     (consult-find buffer indexed)))
   :init
   (vertico-mode)
   (vertico-multiform-mode))
@@ -1074,6 +1075,8 @@ then converted to PDF at the same location."
   (global-page-break-lines-mode))
 
 (use-package gptel
+  :hook (gptel-post-response-functions . gptel-end-of-response)
+  :hook (gptel-post-stream-hook . gptel-auto-scroll)
   :config
   (let ((backend
          (gptel-make-anthropic
@@ -1087,8 +1090,9 @@ then converted to PDF at the same location."
                       tmp-file)
                      tmp-file))
                   (buffer-string)))))
-    (setq gptel-model 'claude-3-sonnet-20240229)
-    (setq gptel-backend backend)))
+    (setq gptel-backend backend
+          gptel-model 'claude-3-sonnet-20240229
+          gptel-use-header-line t)))
 
 (use-package rfc-mode
   :custom
@@ -1115,5 +1119,6 @@ then converted to PDF at the same location."
 
 (load "~/.emacs.d/conf-prog-modes.el")
 (load "~/.emacs.d/conf-mail.el")
+(load "~/projects/claudia/dev.el")
 
 ;;; conf.el ends here

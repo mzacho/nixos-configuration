@@ -28,12 +28,13 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
       # Include home manager
-      # Assumes a channel is set up to track the master branch of
-      # home manager like this:
-      # $ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-      # $ sude nix-channel update
+      # Assumes a channel is set up
       <home-manager/nixos>
+
+      # Include system packages
+      ./packages/full.nix
     ];
 
   fileSystems."/persist".neededForBoot = true;
@@ -260,9 +261,6 @@
     pathsToLink = [
       "/share/nix-direnv"
     ];
-
-    # List packages installed in system profile.
-    systemPackages = import ./packages/full.nix { inherit pkgs; };
   };
 
   documentation = {

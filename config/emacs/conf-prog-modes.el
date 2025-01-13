@@ -123,7 +123,10 @@
   (eglot-extend-to-xref t)
   (eglot-confirm-server-initiated-edits 'confirm)
   (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
-  (eglot-menu-string "eglot"))
+  (eglot-menu-string "eglot")
+  :config
+  ;; increase timeout for eglot enhanced xref-find-references and friends
+  (jsonrpc-default-request-timeout 30))
 
 ;; linting
 
