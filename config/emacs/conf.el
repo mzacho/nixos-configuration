@@ -841,6 +841,23 @@ then converted to PDF at the same location."
 (use-package org-fragtog)
 
 (use-package magit
+  :bind (:map magit-revision-mode-map
+              (("M-n" . (lambda ()
+                          (interactive)
+                          (magit-section-forward-sibling)
+                          (recenter-top-bottom 0)))
+               ("M-p" . (lambda ()
+                          (interactive)
+                          (magit-section-backward-sibling)
+                          (recenter-top-bottom 0)))
+               ("n" . (lambda ()
+                        (interactive)
+                        (magit-section-forward)
+                        (recenter-top-bottom 0)))
+               ("p" . (lambda ()
+                        (interactive)
+                        (magit-section-backward)
+                        (recenter-top-bottom 0)))))
   :custom
   (magit-refresh-verbose t)
   (magit-diff-refine-hunk t)
