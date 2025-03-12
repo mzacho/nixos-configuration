@@ -48,7 +48,7 @@ keycode 59 = w W quotedbl NoSymbol 2
 keycode 60 = v V apostrophe NoSymbol 3
 keycode 66 = Tab
 keycode 61 = z Z
-keycode 94 = quotedbl
+keycode 94 = quotedbl Insert
 keycode 108 = Meta_R
 
 keycode 50 = ISO_Level3_Shift

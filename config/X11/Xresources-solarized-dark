@@ -25,9 +25,10 @@
 #define S_cyan          #2aa198
 #define S_green         #859900
 
+
 !! black dark/light
 *color0:                S_base02
-*color8:                S_base03
+*color8:                S_base00
 
 !! red dark/light
 *color1:                S_red

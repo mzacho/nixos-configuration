@@ -53,10 +53,19 @@
          ("\\.ts\\'" . tsx-ts-mode))
   :bind (("S-s-<return>" . 'my/urxvtc-here)
          ("C-c <tab>" . 'fill-region)
+         ("C-<return>" . 'open-line)
          ("M-n" . scroll-up-line)
          ("M-p" . scroll-down-line)
          ("M-N" . scroll-other-window-line)
-         ("M-P" . scroll-other-window-down-line))
+         ("M-P" . scroll-other-window-down-line)
+         ("M-<down>" . (lambda ()
+                         (interactive)
+                         (forward-paragraph)
+                         (recenter)))
+         ("M-<up>" . (lambda ()
+                       (interactive)
+                       (backward-paragraph)
+                       (recenter))))
   :hook (minibuffer-setup . cursor-intangible-mode)
   :init
   (defun crm-indicator (args)
@@ -66,6 +75,21 @@
                    crm-separator)
                   (car args))
           (cdr args)))
+
+  (defun my/xref-advice (func &rest args)
+    "Recenter if we jumped to a new buffer or more than 13 lines in current buffer."
+    (let ((orig-buf (current-buffer))
+          (orig-point (point)))
+      (apply func args)
+      (if (eq orig-buf (current-buffer))
+          (if (> (abs (- (line-number-at-pos orig-point)
+                         (line-number-at-pos (point))))
+                 13)
+              (progn (recenter-top-bottom)
+                     (recenter-top-bottom)))
+        (progn (recenter-top-bottom)
+               (recenter-top-bottom)))))
+
   :custom
   (debug-on-error nil)
   (inhibit-startup-message t)
@@ -91,9 +115,6 @@
 
   ;; I only use emacs as a single user, no need for lock files
   (create-lockfiles nil)
-
-  ;; Automatic line wrapping
-  (fill-column 67)
 
   ;; Spaces over tabs!
   (indent-tabs-mode nil)
@@ -139,11 +160,17 @@
   (read-buffer-completion-ignore-case t)
   (completion-ignore-case t)
 
+  ;; xref
+  (xref-after-jump-hook (list 'xref-pulse-momentarily))
+
   :config
   ;; Font size (120 = 12pt)
   (if monitor-scaled-p
       (set-face-attribute 'default nil :height 120)
     (set-face-attribute 'default nil :height 170))
+
+  ;; Automatic line wrapping
+  (setq-default fill-column 90)
 
   ;; backups
   (make-directory "~/.emacs.d/auto-save/" t)
@@ -198,7 +225,10 @@
   (set-register ?w '(file . "~/projects/factbird/work.org"))
   (set-register ?C '(file . "~/org/cheat-sheet.org"))
 
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+
+  (advice-add #'xref-find-definitions :around #'my/xref-advice)
+  (advice-add #'xref-go-back :around #'my/xref-advice))
 
 (use-package simple
   :ensure nil
@@ -418,16 +448,16 @@
           (recentf-dump-variable 'recentf-list recentf-max-saved-items)
           (recentf-dump-variable 'recentf-filter-changer-current)
           (insert "\n\n;; Local Variables:\n"
-                  (format ";; coding: %s\n" recentf-save-file-coding-system)
-                  ";; End:\n")
-          (write-region (point-min) (point-max)
-                        (expand-file-name recentf-save-file)
-                        nil 10)
-          (when recentf-save-file-modes
-            (set-file-modes recentf-save-file recentf-save-file-modes))
-          nil)
-      (error
-       (warn "recentf mode: %s" (error-message-string error))))))
+    (format ";; coding: %s\n" recentf-save-file-coding-system)
+    ";; End:\n")
+      (write-region (point-min) (point-max)
+                    (expand-file-name recentf-save-file)
+                    nil 10)
+      (when recentf-save-file-modes
+        (set-file-modes recentf-save-file recentf-save-file-modes))
+      nil)
+    (error
+     (warn "recentf mode: %s" (error-message-string error))))))
 
 (use-package subword
   :ensure nil
@@ -884,6 +914,7 @@ then converted to PDF at the same location."
      (consult-imenu buffer indexed)
      (consult-buffer buffer indexed)
      (consult-git-grep buffer indexed)
+     (consult-ripgrep buffer)
      (consult-grep buffer indexed)
      (consult-xref buffer indexed)
      (consult-find buffer indexed)))
@@ -906,7 +937,8 @@ then converted to PDF at the same location."
   (:map corfu-map
         ;; make help windows persistent so "q" will bury them
         ("M-h" . (lambda () (interactive) (corfu-info-documentation t)))
-        ("SPC" . corfu-insert-separator)
+        ("<escape>" . corfu-quit)
+        ;; ("SPC" . corfu-insert-separator)
         )
   :custom
   (corfu-auto t)

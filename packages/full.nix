@@ -15,21 +15,22 @@ let
     scikit-learn
     statsmodels
   ];
-  python311-pgks = ps: with ps; [
-    (callPackage ../lib/claudesync.nix {})
-  ];
+  # python311-pgks = ps: with ps; [
+  #   (callPackage ../lib/claudesync.nix {})
+  # ];
 in
 
 {
   environment.systemPackages = with pkgs; [
     (callPackage ../bin/default.nix {})
     (python312.withPackages python312-pgks)
-    (python311.withPackages python311-pgks)
+    # (python311.withPackages python311-pgks)
     ansible
     aspell
     aspellDicts.da
     aspellDicts.en
     autorandr
+    awscli2
     bat
     bitwarden
     bitwise
@@ -61,9 +62,11 @@ in
     gnumake
     gnupg
     gnuplot
+    granted
     graph-easy
     graphviz
     hoppscotch
+    heroku
     htop
     httpie
     hydroxide
@@ -72,6 +75,7 @@ in
     imagemagick
     inxi
     jetbrains.idea-community
+    just
     jq
     kompose
     kubectl
@@ -135,7 +139,9 @@ in
     vscode
     wget
     xautomation
+    xclip
     xdotool
+    xdg-desktop-portal-gtk
     xflux
     xkb-switch
     xlayoutdisplay
@@ -145,6 +151,7 @@ in
     yarn
     yq
     yubikey-manager
+    zed-editor
     zip
     zoom-us
     zoxide # (callPackage /home/martin/projects/zoxide/default.nix {})

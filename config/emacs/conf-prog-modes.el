@@ -59,7 +59,7 @@
   )
 
 (use-package comint-mode
-  :ensure nil 
+  :ensure nil
   :no-require
   :custom
   (setq comint-process-echoes t)
@@ -126,7 +126,7 @@
   (eglot-menu-string "eglot")
   :config
   ;; increase timeout for eglot enhanced xref-find-references and friends
-  (jsonrpc-default-request-timeout 30))
+  (setq jsonrpc-default-request-timeout 30))
 
 ;; linting
 
@@ -135,6 +135,14 @@
 (use-package ws-butler
   :diminish
   :commands ws-butler-mode)
+
+;; misc
+
+(use-package grep
+  :config
+  (setq grep-program "rg"))
+
+(use-package just-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; --- language modes
@@ -158,6 +166,8 @@
 
 (use-package typescript-ts-mode
   :ensure nil
+  :mode (("\\.ts\\'"  . tsx-ts-mode)
+         ("\\.mjs\\'" . tsx-ts-mode))
   :hook (tsx-ts-mode . (lambda () (electric-layout-local-mode -1))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

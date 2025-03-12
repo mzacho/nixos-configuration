@@ -6,11 +6,6 @@
 
 {
   nix = {
-    # Use my own nixpkgs and home-manager forks
-    # nixPath = [
-    #   "nixpkgs=${/home/martin/projects/nixpkgs}"
-    #   # "home-manager=${/home/martin/projects/home-manager}"
-    # ];
     settings = {
       keep-outputs = true;
       keep-derivations = true;
@@ -35,6 +30,8 @@
 
       # Include system packages
       ./packages/full.nix
+
+      ./modules/clipmenu.nix
     ];
 
   fileSystems."/persist".neededForBoot = true;
@@ -100,9 +97,10 @@
   };
 
   fonts = {
-    packages = with pkgs; [
-      fira-code
-      nerdfonts
+    packages = [
+      pkgs.fira-code
+      pkgs.fira-code-nerdfont
+      pkgs.nerdfonts
     ];
   };
 
@@ -121,6 +119,16 @@
 
   # Enable RealtimeKit for pulseaudio
   security.rtkit.enable = true;
+
+  # https://github.com/flatpak/xdg-desktop-portal
+  xdg.portal.enable = true;
+  xdg.portal.config = {
+    common = {
+      default = [
+        "gtk"
+      ];
+    };
+  };
 
   services = {
 
@@ -145,6 +153,8 @@
         eval `dircolors ${dircolors}`
         unclutter -idle 1 &
 
+        ## smooth scrolling in firefox
+        export MOZ_USE_XINPUT2=1
         #rsibreak &
         '';
       };
@@ -194,7 +204,8 @@
     };
 
     # Enable the clipmenu clipboard manager daemon
-    clipmenu.enable = true;
+    my_clipmenu.enable = true;
+    my_clipmenu.cm_dir = "/home/martin/.cache/clipmenu";
 
     # Enable urvtd daemon, so new terminal are created via
     # urvt clients, to spawn them faster

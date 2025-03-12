@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+nix-channel --remove nixos
+nix-channel --remove home-manager
+
+nix-channel --add https://nixos.org/channels/nixos-24.11 nixos
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
+
+nix-channel --update
