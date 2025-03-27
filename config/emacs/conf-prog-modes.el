@@ -144,6 +144,14 @@
 
 (use-package just-mode)
 
+(use-package csv-mode
+  :mode (("\\.csv\\'" . csv-align-mode))
+  :config
+  (add-hook csv-align-mode-hook
+            (lambda ()
+              (csv-header-line)
+              (toggle-truncate-lines))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; --- language modes
 

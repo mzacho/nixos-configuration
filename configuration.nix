@@ -387,6 +387,8 @@
 
             # Colorize man pages using bat
             # MANPAGER="sh -c 'col -bx | bat -l man -p'";
+            MANPAGER="less --QUIET";
+            PAGER="less --QUIET";
 
             # zsh
             HISTSIZE=1000000000;
@@ -399,6 +401,7 @@
           initExtra = ''
             # Silence, please
             unsetopt beep
+            set bell-style none
 
             # Set emacs as zle (zsh line editor) main keymap
             bindkey -e
@@ -437,6 +440,7 @@
             jc = "journalctl";
             k = "kubectl";
             l = "ls -ovAFhb --group-directories-first --color=auto";
+            less = "less --QUIET";
             logout = "dm-tool switch-to-greeter";
             m = "man";
             mk = "minikube";
@@ -494,7 +498,7 @@
             git.protocol = "ssh";
             editor = "emacs";
             prompt = "enabled";
-            pager = "less";
+            pager = "less --QUIET";
           };
         };
 

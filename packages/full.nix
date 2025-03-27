@@ -54,6 +54,7 @@ in
     ghostie
     ghostscript
     git
+    git-crypt
     gnome-keyring
     gnumake
     gnupg

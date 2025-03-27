@@ -216,8 +216,9 @@
   (set-register ?e '(file . "/etc/nixos/config/emacs/conf.el"))
   (set-register ?n '(file . "/nix/var/nix/profiles/per-user/root/channels/nixos"))
   (set-register ?d '(file . "~/Downloads"))
-  (set-register ?p '(file . "~/playground"))
+  (set-register ?P '(file . "~/playground"))
   (set-register ?p '(file . "~/projects"))
+  (set-register ?b '(file . "~/projects/martinzacho.net/repo/content/post"))
   (set-register ?x '(file . "/persist/restic-exclude-list.txt"))
   (set-register ?b '(file . "/persist/etc/nixos/bin"))
   (set-register ?l '(file . "/persist/etc/nixos/lib"))
@@ -243,8 +244,8 @@
     (visual-line-mode -1)
     (global-visual-line-mode -1)
     (toggle-truncate-lines 1))
-  :hook ((tabulated-list-mode dired-mode recentf-mode)
-         . my-disable-global-line-mode)
+  :hook ((tabulated-list-mode dired-mode recentf-mode csv-align-mode)
+         . #'my-disable-global-line-mode)
   :config
   (auto-fill-mode 0)
 
@@ -547,7 +548,12 @@
      ("IN CI" :foreground "goldenrod" :weight bold)
      ("PAUSED" :foreground "thistle" :weight bold)))
   (org-capture-templates
-   '(("p" "Pull request" entry
+   '(("t" "Pull request" entry
+      (file+headline "~/projects/factbird/work.org" "Doing")
+      "* READY %? %^{ISSUE}p %^{PR|nil}p"
+      :prepend t
+      :jump-to-captured t)
+     ("p" "Pull request" entry
       (file+headline "~/projects/factbird/work.org" "Pull Requests")
       "* READY %? %^{ISSUE}p %^{PR|nil}p"
       :prepend t
