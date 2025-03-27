@@ -405,7 +405,7 @@
          ("M-=" . push-window-configuration))
   :custom
   (split-width-threshold 101)
-  (split-height-threshold 80)
+  (split-height-threshold 40)
   (same-window-buffer-names '("*compilation*"))
   (switch-to-prev-buffer-skip #'switch-to-prev-buffer-skip-fun))
 

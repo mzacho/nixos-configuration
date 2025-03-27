@@ -151,7 +151,7 @@
         xsetroot -solid '#002b36'
         xflux -l 55.676098 -g 12.568337
         eval `dircolors ${dircolors}`
-        unclutter -idle 1 &
+        # unclutter -idle 1 &
 
         ## smooth scrolling in firefox
         export MOZ_USE_XINPUT2=1

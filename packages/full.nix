@@ -127,7 +127,6 @@ in
     tree
     tree-sitter-grammars.tree-sitter-typescript
     typescript
-    unclutter
     unzip
     upower
     util-linux
