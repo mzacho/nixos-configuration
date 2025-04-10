@@ -81,14 +81,15 @@
     (let ((orig-buf (current-buffer))
           (orig-point (point)))
       (apply func args)
+      (message "%s" orig-buf)
       (if (eq orig-buf (current-buffer))
           (if (> (abs (- (line-number-at-pos orig-point)
                          (line-number-at-pos (point))))
                  13)
-              (progn (recenter-top-bottom)
-                     (recenter-top-bottom)))
-        (progn (recenter-top-bottom)
-               (recenter-top-bottom)))))
+              (with-current-buffer (current-buffer)
+                (recenter-top-bottom)))
+        (with-current-buffer (current-buffer)
+          (recenter-top-bottom)))))
 
   :custom
   (debug-on-error nil)
@@ -548,9 +549,9 @@
      ("IN CI" :foreground "goldenrod" :weight bold)
      ("PAUSED" :foreground "thistle" :weight bold)))
   (org-capture-templates
-   '(("t" "Pull request" entry
+   '(("i" "Work item" entry
       (file+headline "~/projects/factbird/work.org" "Doing")
-      "* READY %? %^{ISSUE}p %^{PR|nil}p"
+      "* READY %?"
       :prepend t
       :jump-to-captured t)
      ("p" "Pull request" entry
@@ -847,23 +848,6 @@ then converted to PDF at the same location."
 (use-package org-fragtog)
 
 (use-package magit
-  :bind (:map magit-revision-mode-map
-              (("M-n" . (lambda ()
-                          (interactive)
-                          (magit-section-forward-sibling)
-                          (recenter-top-bottom 0)))
-               ("M-p" . (lambda ()
-                          (interactive)
-                          (magit-section-backward-sibling)
-                          (recenter-top-bottom 0)))
-               ("n" . (lambda ()
-                        (interactive)
-                        (magit-section-forward)
-                        (recenter-top-bottom 0)))
-               ("p" . (lambda ()
-                        (interactive)
-                        (magit-section-backward)
-                        (recenter-top-bottom 0)))))
   :custom
   (magit-refresh-verbose t)
   (magit-diff-refine-hunk t)
@@ -880,7 +864,12 @@ then converted to PDF at the same location."
   :config
   (remove-hook 'magit-status-sections-hook #'magit-insert-tags-header)
   (remove-hook 'magit-status-sections-hook #'magit-insert-unpushed-to-upstream-or-recent)
-  (remove-hook 'magit-status-sections-hook #'magit-insert-status-headers))
+  (remove-hook 'magit-status-sections-hook #'magit-insert-status-headers)
+  ;; Recenter to always show cursor at the top of the screen
+  (advice-add #'magit-section-forward :after (lambda () (recenter-top-bottom 0)))
+  (advice-add #'magit-section-backward :after (lambda () (recenter-top-bottom 0)))
+  (advice-add #'magit-section-forward-sibling :after (lambda () (recenter-top-bottom 0)))
+  (advice-add #'magit-section-backward-sibling :after (lambda () (recenter-top-bottom 0))))
 
 (use-package magit-delta
   :disabled nil
@@ -889,6 +878,10 @@ then converted to PDF at the same location."
   (setq magit-delta-default-dark-theme "zenburn")
   (setq magit-delta-hide-plus-minus-markers nil)
   :hook (magit-mode . magit-delta-mode))
+
+(use-package shackle
+  :custom
+  (shackle-rules '((magit-revision-mode :same t))))
 
 (use-package abridge-diff ; improve long one-line diffs
   :diminish abridge-diff-mode
