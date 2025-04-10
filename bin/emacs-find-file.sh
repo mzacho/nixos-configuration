@@ -11,8 +11,9 @@ CMD="(find-file \"$1\")"
 
 if [ $(uname -s) = "Linux" ]; then
   emacsclient --socket-name=/run/user/1000/emacs/server \
-              --create-frame --no-wait \
-              --eval "$CMD"
+              --no-wait \
+              --eval "$CMD" &&
+    i3 '[class="Emacs"]' focus
 
 elif [ $(uname -s) = "Darwin" ]; then
   emacsclient --eval "$CMD"

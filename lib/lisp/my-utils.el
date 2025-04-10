@@ -28,7 +28,7 @@
 ;; Open current dir in urxvt
 (defun my/urxvtc-here ()
   (interactive)
-  (shell-command "urxvtc +bc -cd $PWD"))
+  (shell-command "urxvtc +bc -cd $PWD && i3 move right"))
 
 ;; Send command output from shell to new buffer
 (defun my/new-buffer-from-cmd-output (file pwd)

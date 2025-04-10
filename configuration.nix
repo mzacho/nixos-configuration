@@ -385,6 +385,10 @@
             # export LSCOLORS=ExfxcxdxbxEgEdabagacad
             EXA_COLORS="uu=38;5;248:gu=38;5;248:da=32";
 
+            # oh-my-zsh plugin to time command executions
+            ZSH_COMMAND_TIME_COLOR="cyan";
+            ZSH_COMMAND_TIME_MSG="time: %s";
+
             # Colorize man pages using bat
             # MANPAGER="sh -c 'col -bx | bat -l man -p'";
             MANPAGER="less --QUIET";
@@ -474,6 +478,7 @@
             "zsh-autopair"
             "zsh-syntax-highlighting"
             "history-substring-search"
+            "command-time"
           ];
           extraConfig = ''
             zstyle ':omz:update' mode disabled
